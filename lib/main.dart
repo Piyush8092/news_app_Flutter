@@ -19,6 +19,7 @@ class NewsApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: DevicePreview(
+        isToolbarVisible: false,
         builder: (context) => const NewsHomePage(),
       ),
     );
