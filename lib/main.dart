@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/news_data.dart';
@@ -88,6 +86,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
   };
 
   String searchText = "";
+  bool issearch = false;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -112,23 +111,40 @@ class _NewsHomePageState extends State<NewsHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Filter news items based on search text
+    List<NewsItem> filteredNewsItems = newsData[categories[_selectedNewsIndex]]!
+        .where((newsItem) =>
+            newsItem.title.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+
     return Scaffold(
       appBar: _selectedIndex == 0
           ? AppBar(
-              title: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Search categories...',
-                  border: InputBorder.none,
-                ),
-                onChanged: (value) {
-                  setState(() {/**
- * @param {number[][]} arrays
- * @return {number}
- */
-                    searchText = value;
-                  });
-                },
-              ),
+              title: issearch
+                  ? TextField(
+                      decoration: const InputDecoration(
+                        hintText: 'Search...',
+                        border: InputBorder.none,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          searchText = value;
+                        });
+                      },
+                    )
+                  : Text("NewsApp"),
+              actions: [
+                Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          issearch = true;
+                        });
+                      },
+                      icon: Icon(Icons.search),
+                    )),
+              ],
             )
           : null,
       body: _selectedIndex == 1
@@ -145,13 +161,13 @@ class _NewsHomePageState extends State<NewsHomePage> {
                   child: Text('PROFILE PAGE'),
                 )
               : ListView.builder(
-                  itemCount: newsData[categories[_selectedNewsIndex]]!.length,
+                  itemCount: filteredNewsItems.length,
                   itemBuilder: (context, index) {
-                    final newsItem =
-                        newsData[categories[_selectedNewsIndex]]![index];
+                    final newsItem = filteredNewsItems[index];
                     return GestureDetector(
                       onTap: () => _onNewsItemTapped(newsItem),
                       child: Card(
+                        elevation: 10,
                         margin: const EdgeInsets.all(10),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
@@ -164,9 +180,15 @@ class _NewsHomePageState extends State<NewsHomePage> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 10),
-                              Text(newsItem.description),
+                              Text(
+                                newsItem.description,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ],
                           ),
                         ),
