@@ -136,14 +136,22 @@ class _NewsHomePageState extends State<NewsHomePage> {
               actions: [
                 Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          issearch = true;
-                        });
-                      },
-                      icon: Icon(Icons.search),
-                    )),
+                    child: !issearch
+                        ? IconButton(
+                            onPressed: () {
+                              setState(() {
+                                issearch = true;
+                              });
+                            },
+                            icon: Icon(Icons.search),
+                          )
+                        : IconButton(
+                            onPressed: () {
+                              setState(() {
+                                issearch = false;
+                              });
+                            },
+                            icon: Icon(Icons.cancel))),
               ],
             )
           : null,
