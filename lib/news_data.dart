@@ -1,3 +1,4 @@
+// ignore: non_constant_identifier_names
 Map<String, List<Map<String, String>>> NEWSDATA = {
   "Technology": [
     {

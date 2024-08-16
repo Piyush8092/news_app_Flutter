@@ -1,7 +1,8 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/news_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const NewsApp());
@@ -120,7 +121,10 @@ class _NewsHomePageState extends State<NewsHomePage> {
                   border: InputBorder.none,
                 ),
                 onChanged: (value) {
-                  setState(() {
+                  setState(() {/**
+ * @param {number[][]} arrays
+ * @return {number}
+ */
                     searchText = value;
                   });
                 },
