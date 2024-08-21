@@ -1,6 +1,4 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/news_data.dart';
 import 'package:news_app/pages/news_home_page.dart';
 
 void main() {
@@ -18,10 +16,7 @@ class NewsApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DevicePreview(
-        isToolbarVisible: false,
-        builder: (context) => const NewsHomePage(),
-      ),
+      home: const NewsHomePage(),
     );
   }
 }
